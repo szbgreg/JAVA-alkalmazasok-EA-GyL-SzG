@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Főoldal</title>
+    <th:block layout:fragment="head">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- Header Start -->
+    <div class="container-fluid hero-header bg-light py-5 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 mb-3 animated slideInDown">Árfolyam-adatok és devizakereskedés</h1>
+                    <p class="animated slideInDown">Ez az alkalmazás Java Spring Boot keretrendszerrel készült, és két
+                        fő funkciót valósít meg:
+                        az <strong>MNB SOAP webszolgáltatás</strong> segítségével árfolyamadatokat kérhetünk le,
+                        valamint a <strong>FOREX</strong> menüpontokban szimulált devizakereskedést végezhetünk.</p>
+                    <a href="#about" class="btn btn-primary py-3 px-4 animated slideInDown">Bővebben</a>
+                </div>
+                <div class="col-lg-6 animated fadeIn">
+                    <img class="img-fluid animated pulse infinite" style="animation-duration: 3s;" src="img/hero-1.png"
+                         alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- About Start -->
+    <div class="container-xxl py-5">
+        <div class="container" id="about">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <img class="img-fluid" src="img/about.png" alt="Forex Application Screenshot">
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="h-100">
+                        <h1 class="display-6">Rólunk</h1>
+                        <p class="text-primary fs-5 mb-4">SOAP és FOREX integrált webalkalmazás Java Spring Boot
+                            alapon</p>
+                        <p>
+                            Ez az alkalmazás egy Java Spring Boot keretrendszerre épülő szerveroldali webes megoldás,
+                            amely lehetővé teszi a <strong>Magyar Nemzeti Bank SOAP webszolgáltatásából</strong>
+                            történő árfolyam-adatok lekérdezését, valamint egy szimulált
+                            <strong>FOREX kereskedési modul</strong> működését.
+                        </p>
+
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"></i>
+                            <span>SOAP kliens az MNB devizaárfolyam adatainak lekérdezéséhez</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"></i>
+                            <span>FOREX modul aktuális és historikus árfolyamokkal</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="fa fa-check bg-light text-primary btn-sm-square rounded-circle me-3 fw-bold"></i>
+                            <span>Interaktív grafikonok Chart.js segítségével</span>
+                        </div>
+
+                        <a class="btn btn-primary py-3 px-4" th:href="@{/soap}">Próbáld ki az árfolyam lekérdezést</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Facts Start -->
+    <div class="container-xxl bg-light py-5 my-5">
+        <div class="container py-5">
+            <div class="row g-5">
+
+                <div class="col-lg-4 col-md-6 text-center wow fadeIn" data-wow-delay="0.1s">
+                    <img class="img-fluid mb-4" src="img/icon-9.png" alt="MNB SOAP">
+                    <h1 class="display-4" data-toggle="counter-up">27</h1>
+                    <p class="fs-5 text-primary mb-0">Elérhető devizanem az MNB SOAP-ból</p>
+                </div>
+
+                <div class="col-lg-4 col-md-6 text-center wow fadeIn" data-wow-delay="0.3s">
+                    <img class="img-fluid mb-4" src="img/icon-10.png" alt="Forex instruments">
+                    <h1 class="display-4" data-toggle="counter-up">12</h1>
+                    <p class="fs-5 text-primary mb-0">Támogatott FOREX instrumentum</p>
+                </div>
+
+                <div class="col-lg-4 col-md-6 text-center wow fadeIn" data-wow-delay="0.5s">
+                    <img class="img-fluid mb-4" src="img/icon-2.png" alt="SOAP calls">
+                    <h1 class="display-4" data-toggle="counter-up">1000</h1>
+                    <p class="fs-5 text-primary mb-0">SOAP lekérdezés feldolgozva</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Facts End -->
+
+    <!-- Features Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-6">Fő funkciók és előnyök</h1>
+                <p class="text-primary fs-5 mb-5">Miért ez az alkalmazás?</p>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="d-flex align-items-start">
+                        <img class="img-fluid flex-shrink-0" src="img/icon-7.png" alt="SOAP Integration">
+                        <div class="ps-4">
+                            <h5 class="mb-3">SOAP alapú adatlekérdezés</h5>
+                            <span>A rendszer a Magyar Nemzeti Bank SOAP webszolgáltatását használja valós árfolyamok lekérésére,
+                                naprakész devizaadatokat biztosítva.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="d-flex align-items-start">
+                        <img class="img-fluid flex-shrink-0" src="img/icon-6.png" alt="Forex Module">
+                        <div class="ps-4">
+                            <h5 class="mb-3">FOREX szimuláció</h5>
+                            <span>A felhasználó kipróbálhatja a devizakereskedést egy valósághű, oktatási célú szimulációs környezetben.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="d-flex align-items-start">
+                        <img class="img-fluid flex-shrink-0" src="img/icon-5.png" alt="Responsive Design">
+                        <div class="ps-4">
+                            <h5 class="mb-3">Reszponzív kialakítás</h5>
+                            <span>A Bootstrap alapú felület mobilon és asztali gépen is könnyen használható, modern és áttekinthető megjelenéssel.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="d-flex align-items-start">
+                        <img class="img-fluid flex-shrink-0" src="img/icon-4.png" alt="Charts">
+                        <div class="ps-4">
+                            <h5 class="mb-3">Interaktív grafikonok</h5>
+                            <span>A Chart.js könyvtár segítségével dinamikus, szemléletes grafikonok jelenítik meg az árfolyamváltozásokat.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="d-flex align-items-start">
+                        <img class="img-fluid flex-shrink-0" src="img/icon-3.png" alt="Spring Boot">
+                        <div class="ps-4">
+                            <h5 class="mb-3">Modern Spring Boot alap</h5>
+                            <span>A backend Spring Boot keretrendszerre épül, biztosítva a stabilitást, modularitást és könnyű bővíthetőséget.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="d-flex align-items-start">
+                        <img class="img-fluid flex-shrink-0" src="img/icon-8.png" alt="API Integration">
+                        <div class="ps-4">
+                            <h5 class="mb-3">API integráció és adatelemzés</h5>
+                            <span>A SOAP mellett REST API támogatás is beépíthető, amely lehetővé teszi a valós idejű elemzést és adatszinkronizálást.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Features End -->
+
+    <!-- FAQs Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-6">Gyakori kérdések</h1>
+                <p class="text-primary fs-5 mb-5">SOAP alapú devizaárfolyam és FOREX alkalmazás</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="accordionExample">
+
+                        <!-- 1 -->
+                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.1s">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Hogyan működik az árfolyam lekérdezés?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    Az alkalmazás a <strong>Magyar Nemzeti Bank (MNB)</strong> nyilvános
+                                    <strong>SOAP webszolgáltatásán</strong> keresztül kérdezi le a legfrissebb devizaárfolyamokat.
+                                    A válasz XML formátumban érkezik, amit a rendszer feldolgoz, majd táblázatosan és grafikusan megjelenít.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.2s">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Mit jelent a FOREX szimuláció?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    A FOREX modul egy oktatási célú szimuláció, ahol a felhasználó
+                                    virtuálisan „kereskedhet” különböző devizapárokkal (pl. EUR/USD, GBP/HUF).
+                                    A cél, hogy bemutassa, hogyan működnek az árfolyammozgások és a piaci döntések hatása.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.3s">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Milyen technológiákat használ az alkalmazás?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    A rendszer <strong>Java Spring Boot</strong> keretrendszerre épül,
+                                    a megjelenítéshez pedig <strong>Thymeleaf</strong> sablonmotor és <strong>Bootstrap</strong> alapú reszponzív téma használatos.
+                                    Az interaktív grafikonokat a <strong>Chart.js</strong> könyvtár biztosítja.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.4s">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Milyen adatokat szolgáltat az MNB SOAP API?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    Az MNB SOAP API biztosítja a hivatalos napi devizaárfolyamokat több mint 25 devizára,
+                                    beleértve az EUR, USD, GBP, CHF és HUF árfolyamokat, valamint historikus adatokat is
+                                    megadott időintervallumra.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="accordion-item wow fadeInUp" data-wow-delay="0.5s">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Milyen célra készült ez az alkalmazás?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                                 data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    Az alkalmazás oktatási célokat szolgál:
+                                    bemutatja a webszolgáltatások (SOAP) integrálását,
+                                    a Spring Boot architektúra használatát,
+                                    valamint a front-end és back-end kommunikációt egy modern webalkalmazásban.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FAQs End -->
+
+</div>
+
+</body>
+</html>
