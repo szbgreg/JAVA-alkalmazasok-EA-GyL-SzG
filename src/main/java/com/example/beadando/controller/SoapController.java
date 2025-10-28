@@ -26,7 +26,7 @@ public class SoapController {
     public String showPage(Model model) throws MNBArfolyamServiceSoapGetCurrenciesStringFaultFaultMessage {
         model.addAttribute("requestObj", new SoapRequestObj());
         model.addAttribute("currencies", soapService.getCurrencies());
-
+        model.addAttribute("activePage", "soap");
         return "soap";
     }
 
@@ -38,6 +38,7 @@ public class SoapController {
         model.addAttribute("requestObj", requestObj);
         model.addAttribute("xml", response.getXml());
         model.addAttribute("exchangeRates", response.getExchangeRates());
+        model.addAttribute("activePage", "soap");
         return "soap";
     }
 }

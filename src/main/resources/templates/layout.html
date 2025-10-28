@@ -54,14 +54,37 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-4 py-lg-0">
-            <a th:href="@{/}" class="nav-item nav-link active">Főoldal</a>
-            <a th:href="@{/soap}" class="nav-item nav-link">SOAP</a>
-            <a th:href="@{/forex/account}" class="nav-item nav-link">Forex-account</a>
-            <a th:href="@{/forex/actual-price}" class="nav-item nav-link">Forex-AktÁr</a>
-            <a th:href="@{/forex/historic-price}" class="nav-item nav-link">Forex-HistÁr</a>
-            <a th:href="@{/forex/open}" class="nav-item nav-link">Forex-Nyit</a>
-            <a th:href="@{/forex/position}" class="nav-item nav-link">Forex-Poz</a>
-            <a th:href="@{/forex/close}" class="nav-item nav-link">Forex-Zár</a>
+            <a th:href="@{/}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'home'} ? 'active' : ''">Főoldal</a>
+
+            <a th:href="@{/soap}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'soap'} ? 'active' : ''">SOAP</a>
+
+            <a th:href="@{/forex/account}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'forex-account'} ? 'active' : ''">Forex-account</a>
+
+            <a th:href="@{/forex/actual-price}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'forex-aktar'} ? 'active' : ''">Forex-AktÁr</a>
+
+            <a th:href="@{/forex/historic-price}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'forex-histar'} ? 'active' : ''">Forex-HistÁr</a>
+
+            <a th:href="@{/forex/open}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'forex-nyit'} ? 'active' : ''">Forex-Nyit</a>
+
+            <a th:href="@{/forex/position}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'forex-poz'} ? 'active' : ''">Forex-Poz</a>
+
+            <a th:href="@{/forex/close}"
+               class="nav-item nav-link"
+               th:classappend="${activePage == 'forex-zar'} ? 'active' : ''">Forex-Zár</a>
         </div>
         <div class="h-100 d-lg-inline-flex align-items-center d-none">
             <a class="btn btn-square rounded-circle bg-light text-primary me-2" href=""><i
