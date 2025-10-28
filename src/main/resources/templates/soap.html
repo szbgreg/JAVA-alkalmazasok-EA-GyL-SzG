@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>SOAP árfolyam lekérdezés</title>
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- Header Start -->
+    <div class="container-fluid hero-header bg-light py-5 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-3 animated slideInDown">
+                        <span class="text-primary">SOAP</span> alapú Valutaárfolyam lekérdezés
+                    </h1>
+                    <p class="text-secondary mb-4">
+                        Válaszd ki a valutát és az időintervallumot, majd nézd meg a napi MNB árfolyamokat grafikonon!
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center animated fadeIn">
+                    <img class="img-fluid animated pulse infinite" style="animation-duration: 3s;"
+                         src="img/hero-2.png" alt="MNB SOAP lekérdezés">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Form + Diagram Section -->
+    <div class="container pb-5">
+        <div class="row justify-content-center g-5">
+
+            <!-- Form -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm bg-light border-0 p-4">
+                    <h4 class="text-center mb-3">Lekérdezés beállításai</h4>
+
+                    <form th:action="@{/soap}" th:object="${requestObj}" method="post">
+                        <div class="mb-3">
+                            <label for="currency" class="form-label">Valuta</label>
+                            <select id="currency" class="form-select" th:field="*{currency}" required>
+                                <option value="">-- válassz --</option>
+                                <option th:each="curr : ${currencies}"
+                                        th:value="${curr}"
+                                        th:text="${curr}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Kezdő dátum</label>
+                            <input type="date" class="form-control" th:field="*{startDate}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Befejező dátum</label>
+                            <input type="date" class="form-control" th:field="*{endDate}" required>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary py-3 px-4 animated slideInUp w-100">Lekérdezés indítása</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Diagram -->
+            <div class="col-lg-8 col-md-10">
+                <div th:if="${exchangeRates}" class="card bg-light shadow-sm border-0 p-4">
+                    <h4 class="text-center mb-3">Árfolyamdiagram</h4>
+                    <canvas
+                            id="exchangeRates"
+                            style="max-height: 400px"
+                            th:attr="data-labels=${exchangeRates.keySet()}, data-values=${exchangeRates.values()}">
+                    </canvas>
+                </div>
+
+                <div th:if="${xml}" class="card bg-light shadow-sm border-0 p-4 mt-4">
+                    <h5 class="text-secondary">SOAP válasz (XML):</h5>
+                    <pre class="bg-body p-3 border rounded small" th:text="${xml}"></pre>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
