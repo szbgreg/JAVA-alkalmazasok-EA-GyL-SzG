@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <form action="#" th:action="@{/forex/actual-prices}" th:object="${pair}" method="post">
+    <form action="#" th:action="@{/forex/actual-prices}" th:object="${instrumentRequest}" method="post">
         <select name="instruments" th:field="*{instrument}" required>
             <option value="">-- válassz --</option>
             <option th:each="inst : ${instruments}"
@@ -37,6 +37,30 @@
         <input type="submit" value="Submit">
     </form>
 
+    <div th:if="${selectedInstrument}" class="card bg-light shadow-sm border-0 p-4">
+        <div class="container my-5">
+            <h2 th:text="'Aktuális árfolyam – ' + ${price.instrument}"></h2>
+            <p>Időpont: <strong><span th:text="${price.time}"></span></strong></p>
+            <p>
+                Vételi ár (Bid):
+                <strong><span class="text-success fw-bold" th:text="${price.bid}"></span></strong><br>
+                Eladási ár (Ask):
+                <strong><span class="text-danger fw-bold" th:text="${price.ask}"></span></strong><br>
+            </p>
+
+            <p>
+                Státusz:
+                <strong><span th:text="${price.tradeable} ? 'Kereskedésre elérhető' : 'Nem elérhető'"
+                              th:classappend="${price.tradeable} ? 'text-success' : 'text-danger'"></span></strong>
+            </p>
+            <hr>
+        </div>
+
+        <div th:if="${priceStr}" class="card bg-light shadow-sm border-0 p-4 mt-4">
+            <h5 class="text-secondary">Lekérésre kapott válasz:</h5>
+            <pre class="bg-body p-3 border rounded small" th:text="${priceStr}"></pre>
+        </div>
+    </div>
 </div>
 </body>
 </html>
