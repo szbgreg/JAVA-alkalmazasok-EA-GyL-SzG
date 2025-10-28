@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>FOREX Számla Adatok</title>
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="container-fluid hero-header bg-light py-2 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-3 animated slideInDown">
+                        Forex <span class="text-primary">Számla Adatok</span>
+                    </h1>
+                    <p class="text-secondary mb-4">
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center animated fadeIn">
+                    <img class="img-fluid animated pulse infinite" style="animation-duration: 3s; max-height: 300px;"
+                         src="/img/account.png" alt="Számla adatok">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4 pb-5">
+        <h3 class="mb-4 text-center">Számla összefoglaló</h3>
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-person-circle"></i> Fiók ID</h5>
+                    <h4 th:text="${summary.id}"></h4>
+                    <p class="mb-0">Alias: <strong><span th:text="${summary.alias}"></span></strong></p>
+                    <p class="mb-0">Valuta: <strong><span th:text="${summary.currency}"></span></strong></p>
+                    <p class="mb-0">Létrehozva: <strong><span th:text="${summary.createdTime}"></span></strong></p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-wallet2"></i> Egyenleg</h5>
+                    <h4 th:text="${summary.balance + ' ' + summary.currency}"></h4>
+                    <p class="mb-0">NAV: <strong><span th:text="${summary.NAV}"></span></strong></p>
+                    <p class="mb-0">Kivehető összeg: <strong><span th:text="${summary.withdrawalLimit}"></span></strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-graph-up"></i> Profit / Loss</h5>
+                    <p class="mb-1">Realizált P/L: <strong><span th:text="${summary.pl}"></span></strong></p>
+                    <p class="mb-1">Unrealizált P/L: <strong><span th:text="${summary.unrealizedPL}"></span></strong>
+                    </p>
+                    <p class="mb-0">Resetelhető P/L: <strong><span th:text="${summary.resettablePL}"></span></strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-cash-stack"></i> Margin információ</h5>
+                    <p class="mb-1">Margin ráta: <strong><span th:text="${summary.marginRate}"></span></strong></p>
+                    <p class="mb-1">Felhasznált margin: <strong><span th:text="${summary.marginUsed}"></span></strong>
+                    </p>
+                    <p class="mb-0">Elérhető margin: <strong><span th:text="${summary.marginAvailable}"></span></strong>
+                    </p>
+                    <p class="mb-0">Margin closeout %: <strong><span th:text="${summary.marginCloseoutPercent}"></span></strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-diagram-3"></i> Pozíciók</h5>
+                    <p class="mb-1">Nyitott tradek: <strong><span th:text="${summary.openTradeCount}"></span></strong>
+                    </p>
+                    <p class="mb-1">Nyitott pozíciók: <strong><span
+                            th:text="${summary.openPositionCount}"></span></strong></p>
+                    <p class="mb-0">Függő megbízások: <strong><span
+                            th:text="${summary.pendingOrderCount}"></span></strong></p>
+                    <p class="mb-0">
+                        Hedging engedélyezve:
+                        <strong>
+                            <span th:text="${summary.hedgingEnabled} ? 'Igen' : 'Nem'"></span>
+                        </strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-currency-exchange"></i> Finanszírozás és díjak
+                    </h5>
+                    <p class="mb-1">Finanszírozás: <strong><span th:text="${summary.financing}"></span></strong></p>
+                    <p class="mb-1">Jutalék: <strong><span th:text="${summary.commission}"></span></strong></p>
+                    <p class="mb-0">Garantált végrehajtási díj: <strong><span
+                            th:text="${summary.guaranteedExecutionFees}"></span></strong></p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-exclamation-triangle"></i> Margin Call Adatok
+                    </h5>
+                    <p class="mb-1">Margin Call %: <strong><span th:text="${summary.marginCallPercent}"></span></strong>
+                    </p>
+                    <p class="mb-1">Margin Call Count: <strong><span
+                            th:text="${summary.marginCallExtensionCount}"></span></strong></p>
+                    <p class="mb-0">Margin Call Enter Time: <strong><span
+                            th:text="${summary.marginCallEnterTime}"></span></strong></p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-3 bg-light rounded shadow-sm h-100">
+                    <h5 class="text-primary mb-2 fw-bold"><i class="bi bi-clock-history"></i> Utolsó tranzakció</h5>
+                    <p class="mb-1">Last Transaction ID: <strong><span
+                            th:text="${summary.lastTransactionID}"></span></strong></p>
+                    <p class="mb-0">Last Order Fill Timestamp: <strong><span
+                            th:text="${summary.lastOrderFillTimestamp}"></span></strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
