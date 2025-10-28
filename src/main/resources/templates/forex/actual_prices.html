@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>FOREX Aktuális Árak</title>
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="container-fluid hero-header bg-light py-2 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-3 animated slideInDown">
+                        Forex <span class="text-primary">Aktuális Árak</span>
+                    </h1>
+                    <p class="text-secondary mb-2">
+                        Válassz egy devizapárt, és nézd meg az aktuális vételi és eladási árakat.
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center animated fadeIn">
+                    <img class="img-fluid animated pulse infinite" style="animation-duration: 3s; max-height: 300px;"
+                         src="/img/payment-process.png" alt="Valuta Piaci árfolyamok">
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="#" th:action="@{/forex/actual-prices}" th:object="${pair}" method="post">
+        <select name="instruments" th:field="*{instrument}" required>
+            <option value="">-- válassz --</option>
+            <option th:each="inst : ${instruments}"
+                    th:value="${inst.name}"
+                    th:text="${inst.name}"></option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+
+</div>
+</body>
+</html>
