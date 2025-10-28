@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>SOAP</title>
+    <th:block layout:fragment="head">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <form action="#" th:action="@{/soap}" th:object="${requestObj}" method="post">
+        <select name="currencies" th:field="*{currency}">
+            <option th:each="curr : ${currencies}"
+                    th:value="${curr}"
+                    th:text="${curr}">
+            </option>
+        </select><br>
+        Kezdő dátum: <input type="date" th:field="*{startDate}"><br>
+        Befejező dátum: <input type="date" th:field="*{endDate}"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div th:if="${xml}">
+        <h3>SOAP válasz (XML):</h3>
+        <pre th:text="${xml}"></pre>
+    </div>
+
+    <div th:if="${exchangeRates}">
+        <h3>Árfolyamok:</h3>
+        <canvas
+                id="exchangeRates"
+                class="w-100 h-100"
+                th:attr="data-labels=${exchangeRates.keySet()}, data-values=${exchangeRates.values()}">
+        </canvas>
+    </div>
+
+</div>
+
+</body>
+</html>
