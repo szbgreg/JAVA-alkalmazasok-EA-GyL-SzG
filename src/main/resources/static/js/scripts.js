@@ -1,4 +1,3 @@
-
 window.addEventListener("load", function () {
     initExchangeChart();
 });
@@ -8,8 +7,20 @@ function initExchangeChart() {
 
     if (!canvas) return;
 
-    const labels = canvas.getAttribute("data-labels").replace(/[\[\]\s]/g, '').split(",");
-    const values = canvas.getAttribute("data-values").replace(/[\[\]\s]/g, '').split(",").map(Number);
+    const labels =
+        canvas
+            .getAttribute("data-labels")
+            .replace(/[\[\]\s]/g, '')
+            .split(",")
+            .reverse();
+
+    const values =
+        canvas
+            .getAttribute("data-values")
+            .replace(/[\[\]\s]/g, '')
+            .split(",")
+            .map(Number)
+            .reverse();
 
     new Chart(canvas, {
         type: 'line',
