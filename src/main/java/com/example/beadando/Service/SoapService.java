@@ -4,6 +4,7 @@ import com.example.beadando.model.ExchangeRatesResponse;
 import com.example.beadando.model.SoapRequestObj;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import soapclient.MNBArfolyamServiceSoapImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,22 +44,21 @@ public class SoapService {
         String startDate = formatter.format(requestObj.getStartDate());
         String endDate = formatter.format(requestObj.getEndDate());
 
-        System.out.println(startDate);
-
         String xml = service.getExchangeRates(startDate, endDate, currency);
-        List<String> listOfDays, listOfRates;
-        Map<String, String> exchangeRates = new HashMap<>();
+        Map<String, String> exchangeRates = new LinkedHashMap<>();
 
         Document document = Jsoup.parse(xml, "", Parser.xmlParser());
-
         Elements days = document.select("Day");
-        Elements rates = document.select("Rate");
-        listOfDays = days.eachText();
-        listOfRates = rates.eachText();
-        int i = 0;
 
-        for(String day : listOfDays){
-            exchangeRates.put(day, listOfRates.get(i));
+        for (Element day : days) {
+            String date = day.attr("date");
+            Element rateElement = day.selectFirst("Rate");
+
+            if(rateElement != null){
+                String rate = day.selectFirst("Rate").text().trim();
+                rate = rate.replace(",", ".");
+                exchangeRates.put(date, rate);
+            }
         }
 
         return new ExchangeRatesResponse(xml, exchangeRates);
