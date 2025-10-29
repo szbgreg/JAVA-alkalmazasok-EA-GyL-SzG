@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>FOREX Pozíció nyitása</title>
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- Hero -->
+    <div class="container-fluid hero-header bg-light py-2 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-3 animated slideInDown">
+                        Forex <span class="text-primary">Pozíció nyitása</span>
+                    </h1>
+                    <p class="text-secondary mb-2">
+                        Válassz devizapárt és add meg a mennyiséget.
+                        <strong>Pozitív = Long</strong>, <strong>negatív = Short</strong>. A rendszer piaci áron nyit.
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center animated fadeIn">
+                    <img class="img-fluid animated pulse infinite" style="animation-duration: 3s; max-height: 300px;"
+                         src="/img/open.png" alt="Pozíció nyitása">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4 pb-5">
+
+        <!-- Flash üzenetek -->
+        <div th:if="${success}" class="alert alert-success shadow-sm" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger shadow-sm" th:text="${error}"></div>
+
+        <h3 class="mb-4 text-center">Új pozíció</h3>
+
+        <!-- NYITÁS ŰRLAP -->
+        <form th:action="@{/forex/open}" method="post" th:object="${form}"
+              class="row g-3 align-items-end justify-content-center mb-4">
+            <input type="hidden"
+                   th:if="${_csrf != null}"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
+
+            <div class="col-md-5">
+                <label class="form-label fw-bold text-secondary">Instrumentum</label>
+                <select class="form-select shadow-sm" th:field="*{instrument}">
+                    <option th:each="i : ${instruments}" th:value="${i}" th:text="${i}">EUR_USD</option>
+                </select>
+                <div class="text-danger small" th:if="${#fields.hasErrors('instrument')}" th:errors="*{instrument}"></div>
+            </div>
+
+            <div class="col-md-5">
+                <label class="form-label fw-bold text-secondary">Mennyiség
+                    <span class="text-muted fw-normal">(pozitív = Long, negatív = Short)</span>
+                    <div class="form-text">0 nem megengedett. OANDA-n a pozitív = long, negatív = short.</div>
+                </label>
+                <input class="form-control shadow-sm" type="number" step="1" th:field="*{units}"
+                       placeholder="pl. 100 vagy -100">
+
+                <div class="text-danger small" th:if="${#fields.hasErrors('units')}" th:errors="*{units}"></div>
+            </div>
+
+            <div class="col-md-2">
+
+                <button class="btn btn-primary w-100" type="submit">
+                    <i class="bi bi-play-fill"></i> Megnyitás
+                </button>
+            </div>
+        </form>
+        <!-- Opcionális: utolsó válasz / debug megjelenítés -->
+        <div th:if="${lastResponse}" class="container mb-5">
+            <div class="card bg-light border-0 p-4">
+                <h5 class="text-secondary mb-3">
+                    <i class="bi bi-code-square me-1"></i> Szerver válasz (részlet)
+                </h5>
+                <pre class="bg-body p-3 border rounded small text-dark" style="white-space: pre-wrap;"
+                     th:text="${lastResponse}"></pre>
+            </div>
+        </div>
+
+        <!-- Üres állapot -->
+        <div class="alert alert-info mt-4 text-center shadow-sm" th:if="${success == null and error == null}">
+            Válassz instrumentumot és add meg a mennyiséget, majd kattints a <strong>„Megnyitás”</strong> gombra.
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
