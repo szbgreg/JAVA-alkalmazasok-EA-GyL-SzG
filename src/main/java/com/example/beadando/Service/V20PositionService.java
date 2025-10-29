@@ -6,9 +6,9 @@ import com.example.beadando.exception.TestFailureException;
 import com.oanda.v20.Context;
 import com.oanda.v20.ContextBuilder;
 import com.oanda.v20.account.AccountID;
-import com.oanda.v20.position.Position;
-import com.oanda.v20.position.PositionListOpenResponse;
-import com.oanda.v20.position.PositionSide;
+import com.oanda.v20.trade.Trade;
+import com.oanda.v20.trade.TradeID;
+import com.oanda.v20.trade.TradeListOpenResponse;
 
 import org.springframework.stereotype.Service;
 
@@ -18,45 +18,54 @@ import java.util.List;
 @Service
 public class V20PositionService {
 
-    /** Nézetbarát sor DTO. Rakhatod külön package-be is (model), ha szeretnéd. */
+    /** A táblázat sorai – a mintában szereplő mezőkkel. */
     public record PositionRow(
+            long id,
             String instrument,
-            String longUnits,  String longAvgPrice,  String longUPL,
-            String shortUnits, String shortAvgPrice, String shortUPL
+            String openTime,
+            String currentUnits,
+            String price,
+            String unrealizedPL
     ) {}
 
-    private Context buildContext(String appName) {
+    // Segédfüggvény: TradeID -> long
+    private static long toLong(TradeID tradeId) {
+        if (tradeId == null) return 0L;
+        String s = tradeId.toString();           // v20-ban ez adja vissza az ID-t
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException e) {
+            // Ha valaha nem numerikus, jelezzük tisztán
+            throw new IllegalArgumentException("TradeID nem numerikus: " + s, e);
+        }
+    }
+
+    private Context ctx(String app) {
         return new ContextBuilder(Config.URL)
                 .setToken(Config.TOKEN)
-                .setApplication(appName)
+                .setApplication(app)
                 .build();
     }
 
     private final AccountID accountId = Config.ACCOUNTID;
 
-    /** Nyitott pozíciók OANDA v20 SDK-val (request objektum NÉLKÜL, overloaddal). */
+    /** A controller változtatása nélkül hagyjuk a nevet: listOpenPositions(). */
     public List<PositionRow> listOpenPositions() {
-        Context ctx = buildContext("ForexPositions");
         try {
-            PositionListOpenResponse resp = ctx.position.listOpen(accountId);
+            TradeListOpenResponse resp = ctx("ForexOpenTrades").trade.listOpen(accountId);
 
             List<PositionRow> rows = new ArrayList<>();
-            if (resp == null || resp.getPositions() == null) return rows;
+            if (resp == null || resp.getTrades() == null) return rows;
 
-            for (Position p : resp.getPositions()) {
-                String instrument = p.getInstrument() != null ? p.getInstrument().toString() : "-";
+            for (Trade t : resp.getTrades()) {
+                long id           =  toLong(t.getId());
+                String instrument = t.getInstrument() != null ? t.getInstrument().toString() : "-";
+                String openTime   = t.getOpenTime() != null ? t.getOpenTime().toString() : "-";
+                String units      = t.getCurrentUnits() != null ? t.getCurrentUnits().toString() : "0";
+                String price      = t.getPrice() != null ? t.getPrice().toString() : "-";
+                String upl        = t.getUnrealizedPL() != null ? t.getUnrealizedPL().toString() : "-";
 
-                PositionSide L = p.getLong();
-                String lUnits    = (L != null && L.getUnits() != null)         ? L.getUnits().toString()         : "0";
-                String lAvgPrice = (L != null && L.getAveragePrice() != null)  ? L.getAveragePrice().toString()  : "-";
-                String lUPL      = (L != null && L.getUnrealizedPL() != null)  ? L.getUnrealizedPL().toString()  : "-";
-
-                PositionSide S = p.getShort();
-                String sUnits    = (S != null && S.getUnits() != null)         ? S.getUnits().toString()         : "0";
-                String sAvgPrice = (S != null && S.getAveragePrice() != null)  ? S.getAveragePrice().toString()  : "-";
-                String sUPL      = (S != null && S.getUnrealizedPL() != null)  ? S.getUnrealizedPL().toString()  : "-";
-
-                rows.add(new PositionRow(instrument, lUnits, lAvgPrice, lUPL, sUnits, sAvgPrice, sUPL));
+                rows.add(new PositionRow(id, instrument, openTime, units, price, upl));
             }
             return rows;
 
@@ -65,12 +74,11 @@ public class V20PositionService {
         }
     }
 
-    /** Ha kell a nyers OANDA-típusokhoz. */
-    public List<Position> listOpenPositionsRaw() {
-        Context ctx = buildContext("ForexPositionsRaw");
+    /** Ha kell nyers lista a konzolos kiíráshoz. */
+    public List<Trade> listOpenPositionsRaw() {
         try {
-            PositionListOpenResponse resp = ctx.position.listOpen(accountId);
-            return (resp == null || resp.getPositions() == null) ? List.of() : resp.getPositions();
+            TradeListOpenResponse resp = ctx("ForexOpenTradesRaw").trade.listOpen(accountId);
+            return (resp == null || resp.getTrades() == null) ? List.of() : resp.getTrades();
         } catch (Exception e) {
             throw new TestFailureException(e);
         }
