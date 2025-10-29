@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>FOREX Pozíció zárása</title>
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <!-- Hero -->
+    <div class="container-fluid hero-header bg-light py-2 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 mb-3 animated slideInDown">
+                        Forex <span class="text-primary">Pozíció zárása</span>
+                    </h1>
+                    <p class="text-secondary mb-2">
+                        Add meg a <strong>tradeId</strong>-t. A rendszer <strong>piaci áron</strong> zárja az összes egységet.
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center animated fadeIn">
+                    <img class="img-fluid animated pulse infinite" style="animation-duration: 3s; max-height: 300px;"
+                         src="/img/closed.png" alt="Pozíció zárása">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4 pb-5">
+
+        <div th:if="${success}" class="alert alert-success shadow-sm" th:text="${success}"></div>
+        <div th:if="${error}"   class="alert alert-danger shadow-sm"  th:text="${error}"></div>
+
+        <h3 class="mb-4 text-center">Pozíció zárása tradeId alapján</h3>
+
+        <form th:action="@{/forex/close}" method="post" th:object="${form}"
+              class="row g-3 align-items-end justify-content-center mb-4">
+
+            <input type="hidden"
+                   th:if="${_csrf != null}"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold text-secondary">tradeId</label>
+                <input class="form-control shadow-sm" type="number" min="1" step="1" th:field="*{tradeId}"
+                       placeholder="pl. 12345">
+                <div class="text-danger small" th:if="${#fields.hasErrors('tradeId')}" th:errors="*{tradeId}"></div>
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-danger w-100" type="submit">
+                    <i class="bi bi-x-circle"></i> Zárás (ALL)
+                </button>
+            </div>
+        </form>
+
+        <div class="alert alert-info mt-4 text-center shadow-sm"
+             th:if="${success == null and error == null}">
+            Írd be a <strong>tradeId</strong>-t, majd kattints a <strong>„Zárás (ALL)”</strong> gombra.
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>
