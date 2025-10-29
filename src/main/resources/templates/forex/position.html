@@ -53,29 +53,26 @@
             <table class="table table-striped table-hover table-sm align-middle mb-0">
                 <thead class="table-light">
                 <tr>
+                    <th>Id</th>
                     <th>Instrumentum</th>
+                    <th>Open Time</th>
                     <th class="text-end">Long units</th>
                     <th class="text-end">Long avg price</th>
-                    <th class="text-end">Long UPL</th>
                     <th class="text-end">Short units</th>
-                    <th class="text-end">Short avg price</th>
-                    <th class="text-end">Short UPL</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="r : ${positions}">
+                    <td th:text="${r.id()}"></td>
                     <td th:text="${r.instrument()}"></td>
-                    <td class="text-end" th:text="${r.longUnits()}"></td>
-                    <td class="text-end" th:text="${r.longAvgPrice()}"></td>
-                    <td class="text-end" th:text="${r.longUPL()}"></td>
-                    <td class="text-end" th:text="${r.shortUnits()}"></td>
-                    <td class="text-end" th:text="${r.shortAvgPrice()}"></td>
-                    <td class="text-end" th:text="${r.shortUPL()}"></td>
+                    <td th:text="${r.openTime()}"></td>
+                    <td class="text-end" th:text="${r.currentUnits()}"></td>
+                    <td class="text-end" th:text="${r.price()}"></td>
+                    <td class="text-end" th:text="${r.unrealizedPL()}"></td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(positions)}">
-                    <td colspan="7" class="text-center text-muted py-4">
-                        Nincs nyitott pozíció.
-                    </td>
+                    <td colspan="6" class="text-center text-muted py-4">Nincs nyitott trade.</td>
                 </tr>
                 </tbody>
             </table>
