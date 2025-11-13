@@ -53,6 +53,6 @@ public class TradeController {
         model.addAttribute("selectedInstrument", instrumentRequest.getInstrument());
         model.addAttribute("price", actualPriceResponse.getPriceView());
         model.addAttribute("priceStr", actualPriceResponse.getStrOut());
-        return "/forex/actual_prices";
+        return "forex/actual_prices";
     }
 }
